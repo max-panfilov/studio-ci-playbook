@@ -9,5 +9,5 @@ RUN groupadd --gid 65532 verifier \
 WORKDIR /playbook
 COPY pyproject.toml uv.lock ./
 RUN --mount=type=cache,id=studio-ci-playbook-uv-v1,target=/root/.cache/uv uv sync --frozen --no-install-project
-ENV PATH="/playbook/.venv/bin:${PATH}"
+ENV PATH="/playbook/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 USER verifier

@@ -53,7 +53,7 @@ python3 -m unittest discover -s tests -v
 | `docs/native-release.md` | 2 | Release identity graph и publication-only resume |
 | `docs/operations.md` | 1 | Acceptance, backup, selective activation, failure и recovery |
 
-Validator считает fenced `mermaid` blocks и проверяет их начальную декларацию. Он не доказывает полную Mermaid grammar и не рендерит SVG. После публикации требуется визуальный контроль.
+Validator считает fenced `mermaid` blocks и проверяет их начальную декларацию. Дополнительно `ci/Dockerfile.mermaid` вызывает `mermaid.parse` для каждого block в Node-контейнере без сети. Полный визуальный контроль выполняется после публикации на GitHub.
 
 ## Отрицательные tests
 
