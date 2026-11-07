@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "request",
+  "synthetic": true,
+  "evidence": false,
+  "repository": "example-org/playbook-demo",
+  "workflow": "gitea-ci.yml",
+  "event": "workflow_dispatch",
+  "ref": "refs/heads/main",
+  "actor": "synthetic-actor",
+  "purpose": "release",
+  "scope": "auto",
+  "expected_sha": "0000000000000000000000000000000000000000",
+  "base_sha": "1111111111111111111111111111111111111111",
+  "request_id": "00000000-0000-0000-0000-000000000000",
+  "run_id": 0,
+  "run_attempt": 0,
+  "release_authorized": false
+}

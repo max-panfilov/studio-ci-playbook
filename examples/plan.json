@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "synthetic": true,
+  "evidence": false,
+  "repository": "example-org/playbook-demo",
+  "release_sha": "0000000000000000000000000000000000000000",
+  "base_sha": "1111111111111111111111111111111111111111",
+  "mode": "enforce",
+  "scope": "auto",
+  "purpose": "release",
+  "policy_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "components": [
+    {
+      "name": "application",
+      "selected": true,
+      "reason": "changed-input"
+    },
+    {
+      "name": "renderer",
+      "selected": false,
+      "reason": "unchanged"
+    },
+    {
+      "name": "operator-policy",
+      "selected": true,
+      "reason": "always-on"
+    }
+  ],
+  "proposed_checks": [
+    "operator-policy",
+    "native-release"
+  ],
+  "skipped_checks": [
+    "content-checks"
+  ],
+  "unknown_inputs": [],
+  "application_release": true
+}
