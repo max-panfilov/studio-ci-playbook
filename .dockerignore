@@ -1,0 +1,12 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+*.egg-info
+build
+dist
+.env
+client.json
+*.local.json
+secrets

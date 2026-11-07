@@ -1,0 +1,46 @@
+# СИНТЕТИЧЕСКИЙ ПРИМЕР, НЕ WORKFLOW ДЛЯ ЗАПУСКА.
+# YAML 1.2; отсутствие ошибок парсинга не означает Gitea acceptance.
+# Invalid registry, placeholder digest, synthetic runner и обязательная пустая
+# переменная намеренно делают пример непригодным для реального CI.
+name: Synthetic playbook CI (non-deployable)
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: Placeholder Git identity, never a release authorization
+        required: true
+        type: string
+      purpose:
+        description: Schematic release or publication-only resume
+        required: true
+        type: choice
+        options: [release, resume]
+        default: release
+permissions:
+  contents: read
+jobs:
+  scope-plan:
+    runs-on: [self-hosted, synthetic]
+    container:
+      image: registry.playbook.invalid/example/verifier@sha256:0000000000000000000000000000000000000000000000000000000000000000
+    env:
+      PLAYBOOK_SYNTHETIC_ONLY: ''
+    steps:
+      - name: Refuse accidental execution by default
+        run: test "$PLAYBOOK_SYNTHETIC_ONLY" = "confirmed-synthetic"
+      - name: Validate synthetic scope documents only
+        run: python3 scripts/check_playbook.py
+  component-contract:
+    needs: scope-plan
+    runs-on: [self-hosted, synthetic]
+    container:
+      image: registry.playbook.invalid/example/verifier@sha256:0000000000000000000000000000000000000000000000000000000000000000
+    env:
+      PLAYBOOK_SYNTHETIC_ONLY: ''
+    steps:
+      - name: Refuse accidental execution by default
+        run: test "$PLAYBOOK_SYNTHETIC_ONLY" = "confirmed-synthetic"
+      - name: Run document tests without builds or deployment
+        run: python3 -m unittest discover -s tests -v

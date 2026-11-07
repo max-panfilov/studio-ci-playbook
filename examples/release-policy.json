@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "kind": "release-policy",
+  "synthetic": true,
+  "evidence": false,
+  "version": 2,
+  "repository": "example-org/playbook-demo",
+  "components": {
+    "runtime": {
+      "repository": "registry.playbook.invalid/example/runtime",
+      "tools": [
+        {
+          "name": "node",
+          "image_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "inputs": [
+        "apps/example-web/**",
+        "packages/example-contracts/**",
+        "build/example-runtime.Dockerfile"
+      ]
+    },
+    "worker": {
+      "repository": "registry.playbook.invalid/example/worker",
+      "tools": [
+        {
+          "name": "node",
+          "image_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "inputs": [
+        "apps/example-web/**",
+        "packages/example-contracts/**",
+        "build/example-worker.Dockerfile"
+      ]
+    },
+    "mcp": {
+      "repository": "registry.playbook.invalid/example/mcp",
+      "tools": [
+        {
+          "name": "python",
+          "image_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        }
+      ],
+      "inputs": [
+        "services/example-protocol/src/**",
+        "services/example-protocol/pyproject.toml",
+        "build/example-python.Dockerfile"
+      ]
+    },
+    "memory": {
+      "repository": "registry.playbook.invalid/example/memory",
+      "tools": [
+        {
+          "name": "python",
+          "image_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        }
+      ],
+      "inputs": [
+        "services/example-memory/src/**",
+        "services/example-memory/pyproject.toml",
+        "build/example-python.Dockerfile"
+      ]
+    },
+    "pdf": {
+      "repository": "registry.playbook.invalid/example/pdf",
+      "tools": [
+        {
+          "name": "pdf",
+          "image_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      ],
+      "inputs": [
+        "services/example-renderer/package.json",
+        "services/example-renderer/lock.yaml",
+        "build/example-renderer.Dockerfile"
+      ]
+    }
+  },
+  "content": [
+    "README.md",
+    "docs/handbook/**",
+    "content/catalog/**"
+  ],
+  "reviewed_control": [
+    "example-control/reviewed-release.py"
+  ],
+  "full_checks": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "example-control/**",
+    "build/**",
+    ".gitea/**"
+  ]
+}

@@ -1,0 +1,778 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.playbook.invalid/examples.schema.json",
+  "title": "Synthetic studio-ci-playbook examples",
+  "description": "Deliberately illustrative public schema. It is not the private Studio CI schema, not release evidence, and not a production promotion contract.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/studioCi"
+    },
+    {
+      "$ref": "#/$defs/releasePolicy"
+    },
+    {
+      "$ref": "#/$defs/plan"
+    },
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/releaseManifest"
+    }
+  ],
+  "$defs": {
+    "repository": {
+      "const": "example-org/playbook-demo"
+    },
+    "sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "hash64": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nilUuid": {
+      "const": "00000000-0000-0000-0000-000000000000"
+    },
+    "zeroId": {
+      "const": 0
+    },
+    "pathPattern": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "componentSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "tools",
+        "inputs"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "pattern": "^registry\\.playbook\\.invalid/example/(runtime|worker|mcp|memory|pdf)$"
+        },
+        "tools": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "image_id"
+            ],
+            "properties": {
+              "name": {
+                "enum": [
+                  "node",
+                  "python",
+                  "pdf"
+                ]
+              },
+              "image_id": {
+                "$ref": "#/$defs/digest"
+              }
+            }
+          }
+        },
+        "inputs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/pathPattern"
+          }
+        }
+      }
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_sha",
+        "run_id",
+        "attempt",
+        "artifact_id",
+        "receipt_sha256"
+      ],
+      "properties": {
+        "source_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "run_id": {
+          "$ref": "#/$defs/zeroId"
+        },
+        "attempt": {
+          "$ref": "#/$defs/zeroId"
+        },
+        "artifact_id": {
+          "$ref": "#/$defs/zeroId"
+        },
+        "receipt_sha256": {
+          "$ref": "#/$defs/hash64"
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "disposition",
+        "source_sha",
+        "input_fingerprint",
+        "ci_index_digest",
+        "platform_digest",
+        "config_digest",
+        "layers",
+        "run_id",
+        "attempt",
+        "origin"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "pattern": "^registry\\.playbook\\.invalid/example/(runtime|worker|mcp|memory|pdf)$"
+        },
+        "disposition": {
+          "enum": [
+            "built",
+            "reused"
+          ]
+        },
+        "source_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "input_fingerprint": {
+          "$ref": "#/$defs/hash64"
+        },
+        "ci_index_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "platform_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "config_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "layers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/digest"
+          }
+        },
+        "run_id": {
+          "$ref": "#/$defs/zeroId"
+        },
+        "attempt": {
+          "$ref": "#/$defs/zeroId"
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/origin"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "studioCi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "synthetic",
+        "evidence",
+        "version",
+        "mode",
+        "components",
+        "checks",
+        "passive_docs",
+        "full_scope",
+        "gitea"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "studio-ci"
+        },
+        "synthetic": {
+          "const": true
+        },
+        "evidence": {
+          "const": false
+        },
+        "version": {
+          "const": 1
+        },
+        "mode": {
+          "const": "enforce"
+        },
+        "components": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "paths"
+            ],
+            "properties": {
+              "paths": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/pathPattern"
+                }
+              }
+            }
+          }
+        },
+        "checks": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command"
+            ],
+            "properties": {
+              "always": {
+                "type": "boolean"
+              },
+              "components": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "phase": {
+                "enum": [
+                  "build",
+                  "metadata"
+                ]
+              },
+              "command": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "passive_docs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/pathPattern"
+          }
+        },
+        "full_scope": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/pathPattern"
+          }
+        },
+        "gitea": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "repository",
+            "workflow"
+          ],
+          "properties": {
+            "repository": {
+              "$ref": "#/$defs/repository"
+            },
+            "workflow": {
+              "const": "gitea-ci.yml"
+            }
+          }
+        }
+      }
+    },
+    "releasePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "synthetic",
+        "evidence",
+        "version",
+        "repository",
+        "components",
+        "content",
+        "reviewed_control",
+        "full_checks"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "release-policy"
+        },
+        "synthetic": {
+          "const": true
+        },
+        "evidence": {
+          "const": false
+        },
+        "version": {
+          "const": 2
+        },
+        "repository": {
+          "$ref": "#/$defs/repository"
+        },
+        "components": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "runtime",
+            "worker",
+            "mcp",
+            "memory",
+            "pdf"
+          ],
+          "properties": {
+            "runtime": {
+              "$ref": "#/$defs/componentSpec"
+            },
+            "worker": {
+              "$ref": "#/$defs/componentSpec"
+            },
+            "mcp": {
+              "$ref": "#/$defs/componentSpec"
+            },
+            "memory": {
+              "$ref": "#/$defs/componentSpec"
+            },
+            "pdf": {
+              "$ref": "#/$defs/componentSpec"
+            }
+          }
+        },
+        "content": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/pathPattern"
+          }
+        },
+        "reviewed_control": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/pathPattern"
+          }
+        },
+        "full_checks": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/pathPattern"
+          }
+        }
+      }
+    },
+    "plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "synthetic",
+        "evidence",
+        "repository",
+        "release_sha",
+        "base_sha",
+        "mode",
+        "scope",
+        "purpose",
+        "policy_sha256",
+        "components",
+        "proposed_checks",
+        "skipped_checks",
+        "unknown_inputs",
+        "application_release"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "plan"
+        },
+        "synthetic": {
+          "const": true
+        },
+        "evidence": {
+          "const": false
+        },
+        "repository": {
+          "$ref": "#/$defs/repository"
+        },
+        "release_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "base_sha": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mode": {
+          "const": "enforce"
+        },
+        "scope": {
+          "enum": [
+            "auto",
+            "full"
+          ]
+        },
+        "purpose": {
+          "enum": [
+            "release",
+            "pr",
+            "resume"
+          ]
+        },
+        "policy_sha256": {
+          "$ref": "#/$defs/hash64"
+        },
+        "components": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "selected",
+              "reason"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "selected": {
+                "type": "boolean"
+              },
+              "reason": {
+                "enum": [
+                  "changed-input",
+                  "unchanged",
+                  "always-on",
+                  "passive"
+                ]
+              }
+            }
+          }
+        },
+        "proposed_checks": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "skipped_checks": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unknown_inputs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "application_release": {
+          "type": "boolean"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "synthetic",
+        "evidence",
+        "repository",
+        "workflow",
+        "event",
+        "ref",
+        "actor",
+        "purpose",
+        "scope",
+        "expected_sha",
+        "base_sha",
+        "request_id",
+        "run_id",
+        "run_attempt",
+        "release_authorized"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "request"
+        },
+        "synthetic": {
+          "const": true
+        },
+        "evidence": {
+          "const": false
+        },
+        "repository": {
+          "$ref": "#/$defs/repository"
+        },
+        "workflow": {
+          "const": "gitea-ci.yml"
+        },
+        "event": {
+          "enum": [
+            "push",
+            "workflow_dispatch"
+          ]
+        },
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "actor": {
+          "const": "synthetic-actor"
+        },
+        "purpose": {
+          "enum": [
+            "release",
+            "pr",
+            "resume"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "auto",
+            "full"
+          ]
+        },
+        "expected_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "base_sha": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "request_id": {
+          "$ref": "#/$defs/nilUuid"
+        },
+        "run_id": {
+          "$ref": "#/$defs/zeroId"
+        },
+        "run_attempt": {
+          "$ref": "#/$defs/zeroId"
+        },
+        "release_authorized": {
+          "const": false
+        }
+      }
+    },
+    "releaseManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "synthetic",
+        "evidence",
+        "purpose",
+        "status",
+        "repository",
+        "release_sha",
+        "content_sha",
+        "run_id",
+        "run_attempt",
+        "build_run_id",
+        "release_policy_sha256",
+        "production_access",
+        "release_authorized",
+        "images",
+        "tests",
+        "scan"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 2
+        },
+        "kind": {
+          "const": "release-manifest"
+        },
+        "synthetic": {
+          "const": true
+        },
+        "evidence": {
+          "const": false
+        },
+        "purpose": {
+          "const": "checked-component-candidate"
+        },
+        "status": {
+          "const": "synthetic-only"
+        },
+        "repository": {
+          "$ref": "#/$defs/repository"
+        },
+        "release_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "content_sha": {
+          "$ref": "#/$defs/sha"
+        },
+        "run_id": {
+          "$ref": "#/$defs/zeroId"
+        },
+        "run_attempt": {
+          "$ref": "#/$defs/zeroId"
+        },
+        "build_run_id": {
+          "$ref": "#/$defs/zeroId"
+        },
+        "release_policy_sha256": {
+          "$ref": "#/$defs/hash64"
+        },
+        "production_access": {
+          "const": false
+        },
+        "release_authorized": {
+          "const": false
+        },
+        "images": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "runtime",
+            "worker",
+            "mcp",
+            "memory",
+            "pdf"
+          ],
+          "properties": {
+            "runtime": {
+              "$ref": "#/$defs/image"
+            },
+            "worker": {
+              "$ref": "#/$defs/image"
+            },
+            "mcp": {
+              "$ref": "#/$defs/image"
+            },
+            "memory": {
+              "$ref": "#/$defs/image"
+            },
+            "pdf": {
+              "$ref": "#/$defs/image"
+            }
+          }
+        },
+        "tests": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "profile",
+            "receipt_sha256"
+          ],
+          "properties": {
+            "status": {
+              "const": "synthetic-only"
+            },
+            "profile": {
+              "enum": [
+                "full",
+                "knowledge",
+                "components"
+              ]
+            },
+            "receipt_sha256": {
+              "$ref": "#/$defs/hash64"
+            }
+          }
+        },
+        "scan": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "created_at",
+            "fresh",
+            "blockers",
+            "report_sha256"
+          ],
+          "properties": {
+            "status": {
+              "const": "synthetic-only"
+            },
+            "created_at": {
+              "const": "2000-01-01T00:00:00Z"
+            },
+            "fresh": {
+              "const": false
+            },
+            "blockers": {
+              "type": "null"
+            },
+            "report_sha256": {
+              "$ref": "#/$defs/hash64"
+            }
+          }
+        }
+      }
+    }
+  }
+}

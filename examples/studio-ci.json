@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "kind": "studio-ci",
+  "synthetic": true,
+  "evidence": false,
+  "version": 1,
+  "mode": "enforce",
+  "components": {
+    "application": {
+      "paths": [
+        "apps/example-web/**",
+        "packages/example-contracts/**"
+      ]
+    },
+    "renderer": {
+      "paths": [
+        "services/example-renderer/**"
+      ]
+    },
+    "content": {
+      "paths": [
+        "content/catalog/**"
+      ]
+    }
+  },
+  "checks": {
+    "operator-policy": {
+      "always": true,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/policy",
+        "-v"
+      ]
+    },
+    "native-release": {
+      "components": [
+        "application",
+        "renderer"
+      ],
+      "phase": "build",
+      "command": [
+        "python3",
+        "examples/never-a-real-builder.py",
+        "check"
+      ]
+    },
+    "content-checks": {
+      "components": [
+        "content"
+      ],
+      "phase": "build",
+      "command": [
+        "python3",
+        "examples/never-a-real-content-check.py"
+      ]
+    }
+  },
+  "passive_docs": [
+    "README.md",
+    "docs/handbook/**"
+  ],
+  "full_scope": [
+    "packages/example-contracts/**",
+    "example-control/**"
+  ],
+  "gitea": {
+    "repository": "example-org/playbook-demo",
+    "workflow": "gitea-ci.yml"
+  }
+}
