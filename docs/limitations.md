@@ -46,6 +46,6 @@ Read-only content snapshot может обновляться с сохране�
 
 ## Проверки репозитория неполны
 
-Локальный validator проверяет ограниченный набор форматов и маркеров. Он не заменяет полноценным Mermaid parser, Gitea runner, secret scanner, рендерером Markdown или аудитором смысловой приватности. YAML syntax не доказывает принятие Gitea, а JSON Schema не доказывает release authority.
+Локальный validator проверяет ограниченный набор форматов и маркеров. Он не заменяет полноценный Mermaid parser, Gitea runner, secret scanner, рендерером Markdown или аудитором смысловой приватности. YAML syntax не доказывает принятие Gitea, а JSON Schema не доказывает release authority.
 
 После публикации нужны просмотр GitHub rendering, независимый secret scan дерева и истории, а также ручная проверка отсутствия частных сведений. Эти действия не следует считать выполненными без отдельного evidence.

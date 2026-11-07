@@ -49,11 +49,11 @@ Diff строится от корректного accepted baseline до пол�
 
 Синтетический [`release-policy.json`](../examples/release-policy.json) задаёт входы каждого компонента. Fingerprint вычисляется не по одному имени каталога, а по канонической совокупности:
 
-1. путь каждого выбранного файла;
-2. Git mode и blob SHA;
-3. build recipe и его версия;
-4. immutable IDs подготовленных toolchain images;
-5. версия схемы fingerprint и имя компонента.
+1) путь каждого выбранного файла;
+2) Git mode и blob SHA;
+3) build recipe и его версия;
+4) immutable IDs подготовленных toolchain images;
+5) версия схемы fingerprint и имя компонента.
 
 Полный Git tree нормализуется и сортируется. Дубликаты путей, пустой набор входов, неподдерживаемый mode или специальный build input отклоняются. Удаления и mode changes влияют на сравнение.
 

@@ -51,7 +51,7 @@ Preview и production должны получить один digest. Разли
 
 - path-to-component mapping и dependency closure;
 - always-on checks;
-- passive docs, которые  не входят в build;
+- passive docs, которые не входят в build;
 - shared/lock/control/schema/auth patterns, требующие full;
 - поведение при missing base, rename/delete/mode/symlink и unknown paths;
 - стабильный required check и receipt `application_release: false` для docs-only.

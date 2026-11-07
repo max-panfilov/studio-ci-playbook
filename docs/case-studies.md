@@ -45,17 +45,17 @@ Run 1362 ссылался на исходный checked checkpoint run 1361 по
 
 ## 5. PDF: отказ single-probe и исправление readiness
 
-PDF-only candidate прошёл CI, но live activation run 1365 откатилась. Watcher отправил единственный health request сразу после запуска нового renderer. Остальные services уже были готовы, поэтому их состояние не дало PDF времени на старт.
+PDF-only candidate прошёл CI, но live activation в run 1365 откатилась. Watcher отправил единственный health request сразу после запуска нового renderer. Остальные services уже были готовы, поэтому их состояние не дало PDF времени на старт.
 
 После отката прежний renderer снова прошёл render scenario. Изменённый PDF был возвращён к прежнему image; runtime, MCP, memory, data и worker identities сохранились. Failed attempt не был удалён или автоматически повторён.
 
-Исправление ввело отдельное bounded ожидание только read-only PDF readiness:
+Исправление ввело ограниченное ожидание read-only PDF readiness и связанные проверки:
 
 - общий deadline — до 15 секунд;
 - timeout одного request — не более 1 секунды;
-- HTTP 200 принимается только со структурированным `ready: true`;
-- один synthetic render выполняется после готовности;
-- refusal, recovery и сохранность остальных components остаются обязательными.
+- обязательное структурированное `ready: true` в ответе HTTP 200;
+- один synthetic render после готовности;
+- обязательные refusal, recovery и сохранность остальных components.
 
 Watcher относится к control inputs, поэтому исправление не продвигали как ещё один узкий PDF reuse. Run 1366 выполнил полный control gate за 24 мин 14 с. Последующая отдельная активация прошла с новым readiness и подтверждённым backup/acceptance; это закрытое историческое наблюдение, а не текущий live-статус.
 

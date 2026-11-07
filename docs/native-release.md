@@ -56,11 +56,11 @@ Worker policy, backup и rollback читают source конкретного к
 
 Верхний OCI index digest связывает кандидата с multiarch объектом, но сам по себе недостаточен. Gate проверяет:
 
-1. repository и index digest;
-2. platform manifest для целевой архитектуры;
-3. image config digest;
-4. ordered rootfs diff IDs;
-5. tested bytes и receipt именно этой цепочки.
+1) repository и index digest;
+2) platform manifest для целевой архитектуры;
+3) image config digest;
+4) ordered rootfs diff IDs;
+5) tested bytes и receipt именно этой цепочки.
 
 Mutable tag не заменяет digest. Конфликт существующего тега останавливает publication/resume, а не перезаписывает чужой artifact.
 

@@ -28,7 +28,7 @@
 }
 ```
 
-Используйте только разрешённые placeholder SHA/digests, nil UUID, нулевые run/attempt IDs, вымышленный `example-org` и хосты в зоне `.invalid`. Пример обязан быть достаточно полным для обучения, но не должен становиться действительным release receipt.
+Используйте только разрешённые placeholder SHA/digests, nil UUID, нулевые run/attempt IDs, вымышленный `example-org` и хосты в зоне `.invalid`. Пример обязан показывать учебный сценарий целиком, но не должен становиться действительным release receipt., но не должен становиться действительным release receipt.
 
 `examples/gitea-ci.yml` остаётся схематичным и непригодным для запуска. Не заменяйте placeholders рабочими адресами, секретами, настоящими runner labels или deployment командами.
 
