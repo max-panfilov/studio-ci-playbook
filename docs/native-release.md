@@ -46,7 +46,7 @@ Worker policy, backup и rollback читают source конкретного к
 
 ## Original run и original attempt
 
-У каждого component сохраняются исходные `run_id`, `attempt`, `artifact_id` и hash receipt. Наблюдаемый контракт принимает исходную build attempt `1`: повторная попытка того же workflow не переписывает происхождение уже проверенных bytes.
+У каждого component сохраняются исходные `run_id`, `attempt`, `artifact_id` и hash receipt. Наблюдаемый контракт принимает исходную build attempt `1`: повторная попытка того же workflow не переписывает происхождение уже проверенных bytes.
 
 Для `built` component source SHA совпадает с release SHA текущего build candidate, а run совпадает с исходным build run. Для `reused` эти поля указывают на исходный built run. Target загружает original artifact по доверенному API, проверяет его hash и сравнивает repository, source, run, attempt, index/config identity и user.
 
@@ -70,7 +70,7 @@ Mutable tag не заменяет digest. Конфликт существующ�
 
 Общая policy блокирует HIGH/CRITICAL с доступным исправлением. Остальные findings остаются в отчёте. Нулевой blocking count не означает «ноль уязвимостей» и не оценивает риск unfixed/LOW/MEDIUM.
 
-Успешный exit code scanner не является release gate: отдельный evaluator применяет policy, а target проверяет freshness и identity. Сканирование при выпуске не создаёт расписание мониторинга CVE уже работающих образов.
+Успешный exit code scanner не заменяет release gate: отдельный evaluator применяет policy, а target проверяет freshness и identity. Сканирование при выпуске не создаёт расписание мониторинга CVE уже работающих образов.
 
 ## Publication-only resume
 
@@ -101,4 +101,4 @@ Resume не даёт нового release authority. Он остаётся пр�
 
 Checkpoint до публикации, original build receipts, raw scans и target acceptance — разные доказательства. Их сроки хранения согласуются с окном rollback. Короткоживущий CI artifact нельзя считать единственным долгосрочным хранилищем release provenance.
 
-В публичном playbook нет настоящих receipts, IDs и координат. Примеры демонстрируют форму рассуждения, но не переносят частную схему и не доказывают выпуск.
+В публичном playbook нет настоящих receipts, IDs и координат. Примеры демонстрируют форму рассуждения, но не переносят частную схему и не доказывают выпуск.

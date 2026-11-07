@@ -10,7 +10,7 @@
 
 Application install, build, test и packaging выполняются на назначенном self-hosted CI/build host. Рабочая машина редактирует исходники и управляет запусками, но не становится fallback для сборки. GitHub-hosted compute в этой политике не используется.
 
-До checkout или привилегированного шага admission проверяет repository, actor, event, ref, workflow и допустимый runner. Недоверенный fork или PR не получает publisher, production secrets и persistent trusted cache. Изменение admission policy внутри candidate checkout не является независимой границей.
+До checkout или привилегированного шага admission проверяет repository, actor, event, ref, workflow и допустимый runner. Недоверенный fork или PR не получает publisher, production secrets и persistent trusted cache. Изменение admission policy внутри candidate checkout не создаёт независимой границы.
 
 Runner, UID, rootless daemon, caches и network образуют project trust boundary. Rootless Docker снижает часть рисков, но socket даёт широкие полномочия над своим daemon. Проекты с несовместимым доверием не делят unrestricted socket.
 
@@ -61,13 +61,13 @@ Target gate получает доказательства по доверенн�
 
 ## 6. Release authority
 
-Проект явно определяет release branch и допустимый trigger. В режиме main-as-release отдельное поручение владельца push/merge main разрешает штатный выпуск после всех gates без второго вопроса. Доступ к Git, готовая ветка или успешный CI сами по себе такого разрешения не создают.
+Проект явно определяет release branch и допустимый trigger. В режиме main-as-release отдельное поручение владельца push/merge main разрешает штатный выпуск после всех gates без второго вопроса. Доступ к Git, готовая ветка или успешный CI сами по себе такого разрешения не создают.
 
 Publication-only retry сохраняет исходную authorization identity и не расширяет её. Unknown activation outcome сначала сверяется с фактическим runtime и журналом. Новый идентификатор запроса для сверки не становится новым правом на deploy.
 
 ## 7. Данные, backup и rollback
 
-До активации фиксируются previous images/config, свободные ресурсы и согласованный backup. Успешность backup подтверждают snapshot/readback и изолированным restore, а не наличием timer или завершением экспортера.
+До активации фиксируются previous images/config, свободные ресурсы и согласованный backup. Backup считают успешным по snapshot/readback и изолированному restore, а не по наличию timer или завершению экспортера.
 
 Предпочтительны expand–contract migrations и совместимость старого runtime с новой схемой. Кодовый rollback возвращает только сохранённые images/config изменённых сервисов. Он не выполняет DB down/restore автоматически и не удаляет новые business writes.
 

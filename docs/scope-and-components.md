@@ -36,7 +36,7 @@ flowchart TD
 
 - `components` связывает path globs с логическими областями;
 - `checks` задаёт always-on и выборочные команды;
-- `passive_docs` перечисляет пассивные документы, которые не являются build inputs;
+- `passive_docs` перечисляет пассивные документы, которые не входят в build inputs;
 - `full_scope` заставляет расширить проверку при изменении критических входов.
 
 Diff строится от корректного accepted baseline до полного candidate SHA, а не только между двумя последними commits. Rename, delete, executable bit, symlink и submodule нельзя отбрасывать. При недоступном base планировщик выбирает full либо останавливается согласно policy.

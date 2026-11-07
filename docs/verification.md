@@ -8,7 +8,7 @@
 - `ruamel.yaml==0.18.10` с YAML 1.2 и duplicate-key rejection;
 - stdlib `unittest`.
 
-`uv.lock` генерируется на доверенном CI и коммитится для воспроизводимого `uv sync --frozen`. По умолчанию `ci/verify.sh` собирает verifier image из `ci/Dockerfile.verify`. Оператор может вместо этого передать уже принятый immutable image через `PLAYBOOK_VERIFY_IMAGE`.
+`uv.lock` генерируется на доверенном CI и коммитится для воспроизводимого `uv sync --frozen`. По умолчанию `ci/verify.sh` собирает verifier image из `ci/Dockerfile.verify`. Оператор может вместо этого передать уже принятый immutable image через `PLAYBOOK_VERIFY_IMAGE`.
 
 ## Основной entrypoint
 

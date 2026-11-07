@@ -51,7 +51,7 @@ Preview и production должны получить один digest. Разли
 
 - path-to-component mapping и dependency closure;
 - always-on checks;
-- passive docs, которые действительно не входят в build;
+- passive docs, которые  не входят в build;
 - shared/lock/control/schema/auth patterns, требующие full;
 - поведение при missing base, rename/delete/mode/symlink и unknown paths;
 - стабильный required check и receipt `application_release: false` для docs-only.
@@ -98,10 +98,10 @@ Publication-only resume вводите только после checked checkpoin
 
 ## Шаг 10. Отключите конкурирующий старый путь
 
-После приёмки нового маршрута отключите прежние deploy triggers, credentials и второго writer в согласованном scope. Историю и recovery evidence сохраните. Старый target-build, ad hoc copy или archived watcher не должны оставаться случайным fallback.
+После приёмки нового маршрута отключите прежние deploy triggers, credentials и второго writer в согласованном scope. Историю и recovery evidence сохраните. Старый target-build, ad hoc copy или archived watcher не должен оставаться случайным fallback.
 
 Обновите AGENTS/runbook с фактическими командами и ограничениями. Зафиксируйте measured results, unknowns и rollback. Не объявляйте production принятым, если проверен только preview.
 
 ## Минимальный вариант без второго слоя
 
-Для одного application image остановитесь на первых восьми базовых инвариантах: trusted CI, exact SHA, build once, checked output, immutable digest, independent gate, separated credentials, backup и live acceptance. Component fingerprints и publication resume добавляйте только при измеренной необходимости. Это сокращает сложность без ослабления release identity.
+Для одного application image остановитесь на базовых инвариантах: trusted CI, exact SHA, build once, checked output, immutable digest, independent gate, separated credentials, backup и live acceptance. Component fingerprints и publication resume добавляйте только при измеренной необходимости. Это сокращает сложность без ослабления release identity.

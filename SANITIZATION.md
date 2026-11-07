@@ -24,7 +24,7 @@
 - журналы, полные receipts, выгрузки баз, переписка и клиентские сведения;
 - старая production history как готовый fallback или руководство к восстановлению частной системы.
 
-В публичном тексте не должно быть утверждений о текущем принятом release, шести текущих образах, старом shadow pipeline, универсальном PR/preview, универсальном native-release mapping, нулевых уязвимостях, регулярном сканировании уже работающих образов или гарантированном restore.
+В публичном тексте не должно быть утверждений о текущем принятом release, шести текущих образах, старом shadow pipeline, универсальном PR/preview, универсальном native-release mapping, нулевых уязвимостях, регулярном сканировании уже работающих образов или гарантированном restore.
 
 ## Placeholder policy
 
@@ -42,7 +42,7 @@
 
 Значения не связываются с реальными объектами. Даже при формальном совпадении шаблона синтетический manifest имеет `status: "synthetic-only"`, `release_authorized: false` и `evidence: false`.
 
-`ci/verify.sh` по умолчанию собирает verifier image из `ci/Dockerfile.verify` с frozen `uv.lock`. Оператор может вместо этого передать уже принятый immutable image через `PLAYBOOK_VERIFY_IMAGE`; координата не навязывается публичным playbook.
+`ci/verify.sh` по умолчанию собирает verifier image из `ci/Dockerfile.verify` с frozen `uv.lock`. Оператор может вместо этого передать уже принятый immutable image через `PLAYBOOK_VERIFY_IMAGE`; координата не навязывается публичным playbook.
 
 ## Проверка перед публикацией
 

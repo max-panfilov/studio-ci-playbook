@@ -12,7 +12,7 @@
 
 ## Границы
 
-Не добавляйте бинарный `.pyz`, watcher, частные политики, production topology, реальных principals, полные SHA/digests, журналы, request UUID, snapshots, клиентские сведения и credentials. Не копируйте частную Git history или длинные операционные протоколы. Правила обезличивания — в `SANITIZATION.md`.
+Не добавляйте бинарный `.pyz`, watcher, частные политики, production topology, реальные principals, полные SHA/digests, журналы, request UUID, snapshots, клиентские сведения и credentials. Не копируйте частную Git history или длинные операционные протоколы. Правила обезличивания — в `SANITIZATION.md`.
 
 Текущий описанный workflow запускается по push/dispatch. Не обещайте универсальный PR/preview service, универсальное соответствие native-release всем проектам, нулевое число уязвимостей, мониторинг CVE работающих образов или гарантированное восстановление. Content-only release — отдельный маршрут.
 
@@ -22,7 +22,7 @@
 
 Mermaid храните только inline в Markdown. Подписи узлов заключайте в кавычки. После изменения примеров обновите `schemas/examples.schema.json`, тесты и связанные документы. Публичная схема намеренно иллюстративна и не совместима по умолчанию с частной схемой Studio CI.
 
-`pyproject.toml` содержит только зависимости проверки. Не добавляйте application dependencies. `uv.lock` генерируется на доверенном CI и коммитится для воспроизводимого `uv sync --frozen`.
+`pyproject.toml` содержит только зависимости проверки. Не добавляйте application dependencies. `uv.lock` генерируется на доверенном CI и коммитится для воспроизводимого `uv sync --frozen`.
 
 ## Проверка
 

@@ -2,7 +2,7 @@
 
 ## Два уровня решений
 
-Наблюдаемая модель разделяет общий CI/CD policy и конкретный native release contract. Первый слой, Studio CI, планирует область проверок по diff. Второй слой вычисляет component fingerprints, выбирает built/reused и формирует доказательства выпуска. Ни один из них сам по себе не является production authority.
+Наблюдаемая модель разделяет общий CI/CD policy и конкретный native release contract. Первый слой, Studio CI, планирует область проверок по diff. Второй слой вычисляет component fingerprints, выбирает built/reused и формирует доказательства выпуска. Ни один из них сам по себе не даёт production authority.
 
 Studio CI не builder и не deployer. Сборка выполняется отдельными checked recipes; активация — независимым target gate после сверки candidate, original evidence, live state и release semantics.
 

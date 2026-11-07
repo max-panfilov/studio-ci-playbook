@@ -6,8 +6,8 @@ COPY --from=uv /uv /usr/local/bin/uv
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 UV_LINK_MODE=copy
 RUN groupadd --gid 65532 verifier \
  && useradd --uid 65532 --gid verifier --no-create-home --home-dir /tmp --shell /usr/sbin/nologin verifier
-WORKDIR /playbook
+WORKDIR /opt/verifier
 COPY pyproject.toml uv.lock ./
 RUN --mount=type=cache,id=studio-ci-playbook-uv-v1,target=/root/.cache/uv uv sync --frozen --no-install-project
-ENV PATH="/playbook/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ENV PATH="/opt/verifier/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 USER verifier
