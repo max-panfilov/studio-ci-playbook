@@ -31,3 +31,12 @@ fi
 
 # Успех означает только статическую проверку документов. Он не подтверждает
 # Gitea acceptance, Mermaid rendering, отсутствие секретов или production release.
+"$CONTAINER_RUNTIME" build --file "$ROOT/ci/Dockerfile.mermaid" --tag studio-ci-playbook-mermaid:local "$ROOT"
+"$CONTAINER_RUNTIME" run --rm \
+  --network none \
+  --read-only \
+  --cap-drop ALL \
+  --security-opt no-new-privileges \
+  --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+  --volume "$ROOT:/data:ro" \
+  studio-ci-playbook-mermaid:local
