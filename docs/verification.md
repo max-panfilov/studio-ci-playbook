@@ -15,18 +15,17 @@
 На self-hosted runner из корня чистого checkout:
 
 ```sh
-export PLAYBOOK_VERIFY_IMAGE='operator-reviewed-immutable-image'
 ./ci/verify.sh
 ```
 
-Скрипт не выбирает registry и не содержит образ по умолчанию. Он запускает контейнер с read-only root filesystem и checkout, без сети, capabilities и production credentials. Временная файловая система `/tmp` ограничена по размеру. Команды внутри контейнера:
+По умолчанию скрипт собирает локальный образ `studio-ci-playbook-verify:local`. Для готового проверенного образа оператор может задать `PLAYBOOK_VERIFY_IMAGE` с его immutable identity; условное имя из документации использовать нельзя. Тестовый контейнер запускается с read-only root filesystem и checkout, без сети, capabilities и production credentials. Временная файловая система `/tmp` ограничена по размеру. Команды внутри контейнера:
 
 ```sh
 python3 scripts/check_playbook.py
 python3 -m unittest discover -s tests -v
 ```
 
-Подготовка verifier image — отдельная операторская задача на доверенном CI. Dependency downloads не входят в сетевой контур самого теста. Скрипт не устанавливает пакеты и не пишет в checkout.
+После проверок документов скрипт отдельно собирает Mermaid image и разбирает диаграммы. Обе сборки выполняются на доверенном CI; они могут скачивать зависимости. Сами тестовые контейнеры работают без сети. Пакеты устанавливаются внутри образов, checkout остаётся неизменным. `PLAYBOOK_VERIFY_IMAGE` заменяет только verifier image и не отключает сборку Mermaid image.
 
 ## Что проверяет `check_playbook.py`
 
